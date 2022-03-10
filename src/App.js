@@ -6,7 +6,7 @@ function App() {
   return (
     <div className="wrapper clear">
       {/* side-cart hidden */}
-        <Cart />
+      <Cart />
 
       {/* header */}
       <Header />
@@ -24,7 +24,11 @@ function App() {
 
         {/* body cards */}
         <div className="sneakers d-flex justify-between">
-          <Card />
+          <Card
+            name="Мужские Кроссовки Nike Blazer Mid Suede"
+            price={150}
+            imgURL="/img/sneakers/example-1.jpg"
+          />
           <Card />
           <Card />
           <Card />
