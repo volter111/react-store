@@ -2,6 +2,29 @@ import Card from "./components/Card";
 import Header from "./components/Header";
 import Cart from "./components/Cart";
 
+const sneakers = [
+  {
+    title: "Мужские Кроссовки Nike Blazer Mid Suede",
+    price: 155,
+    imgURL: "/img/sneakers/example-1.jpg",
+  },
+  {
+    title: "Мужские Кроссовки Nike Air Max 270",
+    price: 100,
+    imgURL: "/img/sneakers/example-2.jpg",
+  },
+  {
+    title: "Мужские Кроссовки Nike Blazer Mid Suede",
+    price: 50,
+    imgURL: "/img/sneakers/example-3.jpg",
+  },
+  {
+    title: "Кроссовки Puma X Aka Boku Future Rider",
+    price: 75,
+    imgURL: "/img/sneakers/example-4.jpg",
+  },
+];
+
 function App() {
   return (
     <div className="wrapper clear">
@@ -24,14 +47,11 @@ function App() {
 
         {/* body cards */}
         <div className="sneakers d-flex justify-between">
-          <Card
-            name="Мужские Кроссовки Nike Blazer Mid Suede"
-            price={150}
-            imgURL="/img/sneakers/example-1.jpg"
-          />
-          <Card />
-          <Card />
-          <Card />
+          {sneakers.map((sneaker) => {
+            return (
+              <Card title={sneaker.title} price={sneaker.price} imgURL={sneaker.imgURL} />
+            );
+          })}
         </div>
       </div>
     </div>
