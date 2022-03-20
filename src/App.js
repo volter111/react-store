@@ -49,7 +49,14 @@ function App() {
         <div className="sneakers d-flex justify-between">
           {sneakers.map((sneaker) => {
             return (
-              <Card title={sneaker.title} price={sneaker.price} imgURL={sneaker.imgURL} />
+              <Card
+                title={sneaker.title}
+                price={sneaker.price}
+                imgURL={sneaker.imgURL}
+                onClickFav={() => {
+                  alert("Добавлено в закладки");
+                }}
+              />
             );
           })}
         </div>
