@@ -1,13 +1,18 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import cardStyles from "./Card.module.scss";
-// Card component
 
-const Card = (props) => {
+
+const Card = ({imgURL, title, price, clickOnFavBtn, addToCart}) => {
   const [isSelected, setIsSelected] = useState(false);
 
-  const btnSelect = () => {
+  const addToCartBtn = () => {
     setIsSelected(!isSelected);
+    addToCart({title, imgURL, price})
   };
+
+  useEffect(()=> {
+    console.log('isSelected has been changed')
+  }, [isSelected])
 
   return (
     <div className={cardStyles.card}>
@@ -15,21 +20,21 @@ const Card = (props) => {
         <img
           src="/img/heart-unliked.svg"
           alt="unliked"
-          onClick={props.onClickFav}
+          onClick={clickOnFavBtn}
         />
       </div>
 
-      <img width={133} height={112} src={props.imgURL} alt="sneakerPhoto" />
-      <h5>{props.title}</h5>
+      <img width={133} height={112} src={imgURL} alt="sneakerPhoto" />
+      <h5>{title}</h5>
       <div className="d-flex justify-between align-center">
         <div className="d-flex flex-column">
           <span>Price:</span>
-          <b>${props.price}</b>
+          <b>${price}</b>
         </div>
 
         <img
           className={cardStyles.btnSelect}
-          onClick={btnSelect}
+          onClick={addToCartBtn}
           src={isSelected ? "/img/selected.svg" : "/img/unselected.svg"}
           alt="btnCheck"
         />
