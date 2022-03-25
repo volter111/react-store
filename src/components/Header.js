@@ -12,7 +12,7 @@ const Header = (props) => {
         <ul className="d-flex">
           <li className="mr-30">
             <img className="cartSVG cu-p" onClick={props.openCart} src="/img/cart.svg" alt="logo" />
-            <span>$150</span>
+            <span>${props.totalPrice}</span>
           </li>
           <li>
             <img className="userSVG" src="/img/user.svg" alt="logo" />

@@ -62,6 +62,17 @@ header {
   border-radius: 20px;
   // element cannot be shown over the block border
   overflow: hidden; 
+  position: relative;
+
+  .eraseText {
+    cursor: pointer;
+    position: absolute;
+    right: 0;
+    width: 15%;
+    height: 45%;
+    top: 12px;
+  }
+
   input {
     border: 0;
     padding: 10px;
@@ -93,6 +104,10 @@ header {
   box-shadow: -10px 4px 24px rgba(0, 0, 0, 0.1);
   border-radius: 5px;
   padding: 30px;
+
+  .emptyCart {
+    margin: 10%;
+  }
 
   h2 {
     margin: 0;
@@ -149,6 +164,19 @@ header {
 
 .items {
   flex: 1;
+}
+
+.backToTheStore {
+  background-color: #9DD558;
+  border: 0;
+  height: 60px;
+  width: 250px;
+  border-radius: 18px;
+  margin-top: 20px;
+  transition: box-shadow 0.2s ease-in-out, transform 0.2s ease-in-out;
+  font-size: 20px;
+  color: white;
+  cursor: pointer;
 }
 
 .buyItemsBtn {

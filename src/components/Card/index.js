@@ -1,26 +1,31 @@
 import { useEffect, useState } from "react";
 import cardStyles from "./Card.module.scss";
 
-
-const Card = ({imgURL, title, price, clickOnFavBtn, addToCart}) => {
+const Card = ({ imgURL, title, price, addToFav, addToCart }) => {
   const [isSelected, setIsSelected] = useState(false);
+  const [isFav, setIsFav] = useState(false);
+
+  const likeBtn = () => {
+    setIsFav(!isFav);
+    addToFav({ title, imgURL, price });
+  };
 
   const addToCartBtn = () => {
     setIsSelected(!isSelected);
-    addToCart({title, imgURL, price})
+    addToCart({ title, imgURL, price });
   };
 
-  useEffect(()=> {
-    console.log('isSelected has been changed')
-  }, [isSelected])
+  useEffect(() => {
+    console.log("isSelected has been changed");
+  }, [isSelected]);
 
   return (
     <div className={cardStyles.card}>
       <div className={cardStyles.likeButton}>
         <img
-          src="/img/heart-unliked.svg"
+          onClick={likeBtn}
+          src={isFav ? "/img/heart-liked.svg" : "/img/heart-unliked.svg"}
           alt="unliked"
-          onClick={clickOnFavBtn}
         />
       </div>
 
