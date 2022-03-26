@@ -1,8 +1,9 @@
-import Card from "./components/Card";
 import Header from "./components/Header";
 import Cart from "./components/Cart";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import Home from "./components/Home";
+
 
 // const sneakers = [
 //   {
@@ -33,10 +34,7 @@ function App() {
   const [cartItems, setCartItems] = useState([]);
   const [searchText, setSearchText] = useState("");
   const [totalPrice, setTotalPrice] = useState(0);
-  // const [favItems, setFavItesm] = useState([]);
-  
-
-  useEffect(() => {}, [cartItems]);
+  const [favItems, setFavItesm] = useState([]);
 
 
   useEffect(() => {
@@ -49,15 +47,13 @@ function App() {
       .then((res) => setCartItems(res.data));
   }, []);
 
- 
-
   const openOrCloseCart = () => {
     setCartOpened(!cartOpened);
   };
 
   const clickOnFav = (obj) => {
     axios.post("https://623a304abbe20c3f66d01e15.mockapi.io/fav", obj);
-    setCartItems((prev) => [...prev, obj]); // push new selected item to previous favItems arr
+    setFavItesm((prev) => [...prev, obj]); // push new selected item to previous favItems arr
   };
 
   const clickOnAdd = (obj) => {
@@ -80,6 +76,9 @@ function App() {
 
   return (
     <div className="wrapper clear">
+      {/* header */}
+      <Header totalPrice={totalPrice} openCart={openOrCloseCart} />
+
       {/* side-cart */}
       {cartOpened ? (
         <Cart
@@ -90,55 +89,14 @@ function App() {
         />
       ) : null}
 
-      {/* header */}
-      <Header totalPrice={totalPrice} openCart={openOrCloseCart} />
-
       {/* content */}
-      <div className="content p-40">
-        {/* search-block */}
-        <div className="d-flex justify-between mb-40">
-          <h1>{searchText ? `Search by: "${searchText}"` : "All sneakers"}</h1>
-          <div className="d-flex justify-center search-block">
-            <img className="searchSVG" src="/img/search.svg" alt="search" />
-
-            {searchText ? (
-              <img
-                onClick={() => setSearchText("")}
-                className="eraseText"
-                src="/img/delete.svg"
-                alt="close"
-              />
-            ) : null}
-
-            <input
-              onChange={getSearchText}
-              value={searchText}
-              type="text"
-              placeholder="Search..."
-            />
-          </div>
-        </div>
-
-        {/* body cards */}
-        <div className="sneakers d-flex flex-wrap ">
-          {items
-            .filter((item) =>
-              item.title.toLowerCase().includes(searchText.toLowerCase())
-            )
-            .map((sneaker, index) => {
-              return (
-                <Card
-                  key={index}
-                  title={sneaker.title}
-                  price={sneaker.price}
-                  imgURL={sneaker.imgURL}
-                  addToCart={clickOnAdd}
-                  addToFav={clickOnFav}
-                />
-              );
-            })}
-        </div>
-      </div>
+      <Home
+        items={items}
+        searchText={searchText}
+        clickOnAdd={clickOnAdd}
+        clickOnFav={clickOnFav}
+        getSearchText={getSearchText}
+      />
     </div>
   );
 }
