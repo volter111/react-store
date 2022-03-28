@@ -1,18 +1,12 @@
-import { useState } from "react";
 import cardStyles from "./Card.module.scss";
 
-const Card = ({ imgURL, title, price, addToFav, addToCart }) => {
-  const [isSelected, setIsSelected] = useState(false);
-  const [isFav, setIsFav] = useState(false);
-
+const Card = ({ sneaker, addToFav, addToCart, isAdded, isFavourite }) => {
   const favBtnAction = () => {
-    setIsFav(!isFav);
-    addToFav({ title, imgURL, price });
+    addToFav(sneaker.id);
   };
 
   const addToCartBtn = () => {
-    setIsSelected(!isSelected);
-    addToCart({ title, imgURL, price });
+    addToCart(sneaker.id);
   };
 
   return (
@@ -20,23 +14,23 @@ const Card = ({ imgURL, title, price, addToFav, addToCart }) => {
       <div className={cardStyles.likeButton}>
         <img
           onClick={favBtnAction}
-          src={isFav ? "/img/heart-liked.svg" : "/img/heart-unliked.svg"}
+          src={isFavourite ? "/img/heart-liked.svg" : "/img/heart-unliked.svg"}
           alt="unliked"
         />
       </div>
 
-      <img width={133} height={112} src={imgURL} alt="sneakerPhoto" />
-      <h5>{title}</h5>
+      <img width={133} height={112} src={sneaker.imgURL} alt="sneakerPhoto" />
+      <h5>{sneaker.title}</h5>
       <div className="d-flex justify-between align-center">
         <div className="d-flex flex-column">
           <span>Price:</span>
-          <b>${price}</b>
+          <b>${sneaker.price}</b>
         </div>
 
         <img
           className={cardStyles.btnSelect}
           onClick={addToCartBtn}
-          src={isSelected ? "/img/selected.svg" : "/img/unselected.svg"}
+          src={isAdded ? "/img/selected.svg" : "/img/unselected.svg"}
           alt="btnCheck"
         />
       </div>

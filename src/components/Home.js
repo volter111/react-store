@@ -40,12 +40,12 @@ const Home = (props) => {
           .map((sneaker, index) => {
             return (
               <Card
+                sneaker={sneaker}
                 key={index}
-                title={sneaker.title}
-                price={sneaker.price}
-                imgURL={sneaker.imgURL}
                 addToCart={props.clickOnAdd}
                 addToFav={props.clickOnFav}
+                isAdded={props.cardIds.includes(sneaker.id)}
+                isFavourite={props.favIds.includes(sneaker.id)}
               />
             );
           })}

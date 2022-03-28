@@ -1,11 +1,7 @@
 import Header from "./Header";
 
 const Favourites = () => {
-  return (
-    <div className="wrapper clear">
-      <h2>adas</h2>
-    </div>
-  );
+  return <h1>asdasd</h1>;
 };
 
 export default Favourites;

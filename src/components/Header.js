@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-const Header = (props) => {
+const Header = ({totalPrice, openOrCloseCart}) => {
   return (
     <header className="d-flex justify-between align-center p-40">
       <div className="d-flex align-center">
@@ -21,11 +21,11 @@ const Header = (props) => {
             </Link>
             <img
               className="cartSVG cu-p"
-              onClick={props.openCart}
+              onClick={openOrCloseCart}
               src="/img/cart.svg"
               alt="cart"
             />
-            <span>${props.totalPrice}</span>
+            <span>${totalPrice}</span>
           </li>
           <li>
             <img className="userSVG" src="/img/user.svg" alt="user" />
