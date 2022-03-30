@@ -36,7 +36,7 @@ const Cart = ({ closeCart, onDelete, totalPrice, items = [] }) => {
                     width="15%"
                     src="/img/delete.svg"
                     alt="delete"
-                    onClick={() => onDelete(item.id, item.price)}
+                    onClick={() => onDelete(item.id)}
                   />
                 </div>
               ))}

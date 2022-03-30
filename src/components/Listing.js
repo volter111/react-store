@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import axios from "axios";
 import Home from "./Home";
 
@@ -25,27 +25,24 @@ import Home from "./Home";
 //   },
 // ];
 
-function Listing({
-  setCartItems,
-  setFavItesm,
-  items,
-}) {
-  
+function Listing({ setCartItems, setFavItesm, items, cartIds, favIds }) {
+
   const [searchText, setSearchText] = useState("");
-
-  
-
-  const clickOnFav = async (obj) => {
-    await axios.post("https://623a304abbe20c3f66d01e15.mockapi.io/fav", obj.itemId);
-    setFavItesm((prev) => [...prev, obj]); // push new selected item to previous favItems arr
-  };
 
   const clickOnAdd = async (obj) => {
     await axios.post(
       "https://623a304abbe20c3f66d01e15.mockapi.io/cart",
-      obj.itemId
+      {'itemId':obj.itemId}
     );
-    setCartItems((prev) => [...prev, obj.itemId]); // push new selected item to previous cartItems arr
+    setCartItems((prev) => [...prev, obj.itemId]); 
+  };
+
+  const clickOnFav = async (obj) => {  
+    await axios.post(
+      "https://623a304abbe20c3f66d01e15.mockapi.io/fav",
+      {'itemId':obj.itemId}
+    );
+    setFavItesm((prev) => [...prev, obj.itemId]);
   };
 
   const getSearchText = (event) => {
@@ -59,6 +56,9 @@ function Listing({
       clickOnAdd={clickOnAdd}
       clickOnFav={clickOnFav}
       getSearchText={getSearchText}
+      setSearchText={setSearchText}
+      cartIds = {cartIds}
+      favIds = {favIds}
     />
   );
 }

@@ -1,12 +1,13 @@
 import cardStyles from "./Card.module.scss";
 
-const Card = ({ sneaker, addToFav, addToCart, isAdded, isFavourite }) => {
+const Card = ({ sneaker, addToFav, addToCart, isAdded, isFavourited }) => {
+  
   const favBtnAction = () => {
-    addToFav(sneaker.id);
+    addToFav(sneaker);
   };
 
   const addToCartBtn = () => {
-    addToCart(sneaker.id);
+    addToCart(sneaker);
   };
 
   return (
@@ -14,7 +15,7 @@ const Card = ({ sneaker, addToFav, addToCart, isAdded, isFavourite }) => {
       <div className={cardStyles.likeButton}>
         <img
           onClick={favBtnAction}
-          src={isFavourite ? "/img/heart-liked.svg" : "/img/heart-unliked.svg"}
+          src={isFavourited ? "/img/heart-liked.svg" : "/img/heart-unliked.svg"}
           alt="unliked"
         />
       </div>
