@@ -1,5 +1,4 @@
 const Cart = ({ closeCart, onDelete, totalPrice, items = [] }) => {
-
   return (
     <div>
       {items.length > 0 ? (

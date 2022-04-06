@@ -25,7 +25,7 @@ const Header = ({totalPrice, openOrCloseCart}) => {
               src="/img/cart.svg"
               alt="cart"
             />
-            <span>${totalPrice}</span>
+            <span>${ totalPrice }</span>
           </li>
           <li>
             <img className="userSVG" src="/img/user.svg" alt="user" />
