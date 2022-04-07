@@ -1,20 +1,27 @@
 import cardStyles from "./Card.module.scss";
 
-const Card = ({ sneaker, addToFav, addToCart, isAdded, isFavourited }) => {
-  
-  const favBtnAction = () => {
-    addToFav(sneaker);
+const Card = ({
+  sneaker,
+  addToFav,
+  addToCart,
+  isAdded,
+  isFavourited,
+  removeFromCart,
+  removeFromFav,
+}) => {
+  const favBtnAction = (bool) => {
+    bool ? removeFromFav(sneaker.id) : addToFav(sneaker);
   };
 
-  const addToCartBtn = () => {
-    addToCart(sneaker);
+  const addToCartBtnAction = (bool) => {
+    bool ? removeFromCart(sneaker.id) : addToCart(sneaker);
   };
 
   return (
     <div className={cardStyles.card}>
       <div className={cardStyles.likeButton}>
         <img
-          onClick={favBtnAction}
+          onClick={() => favBtnAction(isFavourited)}
           src={isFavourited ? "/img/heart-liked.svg" : "/img/heart-unliked.svg"}
           alt="unliked"
         />
@@ -30,7 +37,7 @@ const Card = ({ sneaker, addToFav, addToCart, isAdded, isFavourited }) => {
 
         <img
           className={cardStyles.btnSelect}
-          onClick={addToCartBtn}
+          onClick={() => addToCartBtnAction(isAdded)}
           src={isAdded ? "/img/selected.svg" : "/img/unselected.svg"}
           alt="btnCheck"
         />

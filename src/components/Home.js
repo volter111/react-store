@@ -1,4 +1,3 @@
-import Card from "./Card";
 import { useMemo } from "react";
 
 function Home({
@@ -10,23 +9,19 @@ function Home({
   setSearchText,
   cartIds,
   favIds,
+  removeFromFav,
+  removeFromCart,
+  card: Card,
 }) {
-  const cartIdsArr = useMemo(
-    () =>
-      cartIds.reduce((res, el) => {
-        res.push(el.id);
-        return res;
-      }, []),
-    [cartIds]
-  );
+  const favIdsArr = useMemo(() => favIds.map((item) => item.id), [favIds]);
+  const cartIdsArr = useMemo(() => cartIds.map((item) => item.id), [cartIds]);
 
-  const favIdsArr = useMemo(
+  const filteredItems = useMemo(
     () =>
-      favIds.reduce((res, el) => {
-        res.push(el.id);
-        return res;
-      }, []),
-    [favIds]
+      items.filter((item) =>
+        item.title.toLowerCase().includes(searchText.toLowerCase())
+      ),
+    [items, searchText]
   );
 
   return (
@@ -57,22 +52,20 @@ function Home({
 
       {/* body cards */}
       <div className="sneakers d-flex flex-wrap ">
-        {items
-          .filter((item) =>
-            item.title.toLowerCase().includes(searchText.toLowerCase())
-          )
-          .map((sneaker) => {
-            return (
-              <Card
-                sneaker={sneaker}
-                key={sneaker.id}
-                addToCart={clickOnAdd}
-                addToFav={clickOnFav}
-                isAdded={cartIdsArr.includes(sneaker.id)}
-                isFavourited={favIdsArr.includes(sneaker.id)}
-              />
-            );
-          })}
+        {filteredItems.map((sneaker) => {
+          return (
+            <Card
+              removeFromCart={removeFromCart}
+              removeFromFav={removeFromFav}
+              sneaker={sneaker}
+              key={sneaker.id}
+              addToCart={clickOnAdd}
+              addToFav={clickOnFav}
+              isAdded={cartIdsArr.includes(sneaker.id)}
+              isFavourited={favIdsArr.includes(sneaker.id)}
+            />
+          );
+        })}
       </div>
     </div>
   );

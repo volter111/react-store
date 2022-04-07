@@ -1,9 +1,10 @@
 import { Route, BrowserRouter, Routes } from "react-router-dom";
-import Favourites from "./components/Favourites";
 import Listing from "./components/Listing";
 import { useState, useMemo, useEffect } from "react";
 import Header from "./components/Header";
 import Cart from "./components/Cart";
+import Card from "./components/Card";
+import FavCard from "./components/FavCard";
 import axios from "axios";
 
 // How to start:
@@ -65,6 +66,15 @@ function App() {
     }
   };
 
+  const removeFromFav = async (id) => {
+    try {
+      await axios.delete(`http://localhost:3004/favIds/${id}`);
+      setFavIds((prev) => prev.filter((item) => item.id !== id));
+    } catch (error) {
+      alert(error);
+    }
+  };
+
   return (
     <BrowserRouter>
       <div className="wrapper clear">
@@ -82,7 +92,25 @@ function App() {
             path="/"
             element={
               <Listing
+                card={Card}
                 items={items}
+                setCartItems={setCartIds}
+                setFavItems={setFavIds}
+                favItems={favItems}
+                cartIds={cartIds}
+                favIds={favIds}
+                removeFromCart={removeFromCart}
+                removeFromFav={removeFromFav}
+              />
+            }
+          />
+          <Route
+            path="/favourites"
+            element={
+              <Listing
+                removeFromFav={removeFromFav}
+                card={FavCard}
+                items={favItems}
                 setCartItems={setCartIds}
                 setFavItems={setFavIds}
                 favItems={favItems}
@@ -91,7 +119,6 @@ function App() {
               />
             }
           />
-          <Route path="/favourites" element={<Favourites />} />
         </Routes>
       </div>
     </BrowserRouter>
