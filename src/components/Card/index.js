@@ -20,10 +20,10 @@ const Card = ({
   return (
     <div className={cardStyles.card}>
       <div className={cardStyles.likeButton}>
-        <img
+        <img className={cardStyles.favImg}
           onClick={() => favBtnAction(isFavourited)}
           src={isFavourited ? "/img/heart-liked.svg" : "/img/heart-unliked.svg"}
-          alt="unliked"
+          alt="favourite"
         />
       </div>
 

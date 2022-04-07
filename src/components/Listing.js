@@ -1,48 +1,47 @@
-import { useState } from "react";
-import axios from "axios";
-import Home from "./Home";
+import { useMemo } from "react";
 
 function Listing({
-  setCartItems,
-  setFavItems,
   items,
+  searchText,
+  clickOnAdd,
+  clickOnFav,
   cartIds,
   favIds,
-  card,
   removeFromFav,
   removeFromCart,
+  card: Card,
 }) {
-  const [searchText, setSearchText] = useState("");
+  const favIdsArr = useMemo(() => favIds.map((item) => item.id), [favIds]);
+  const cartIdsArr = useMemo(() => cartIds.map((item) => item.id), [cartIds]);
 
-  const getSearchText = (event) => {
-    setSearchText(event.target.value);
-  };
-
-  const clickOnAdd = async (obj) => {
-    await axios.post("http://localhost:3004/cartIds/", { id: obj.id });
-    setCartItems((prev) => [...prev, { id: obj.id }]);
-    console.log(obj);
-  };
-
-  const clickOnFav = async (obj) => {
-    await axios.post("http://localhost:3004/favIds/", { id: obj.id });
-    setFavItems((prev) => [...prev, { id: obj.id }]);
-  };
+  const filteredItems = useMemo(
+    () =>
+      items.filter((item) =>
+        item.title.toLowerCase().includes(searchText.toLowerCase())
+      ),
+    [items, searchText]
+  );
 
   return (
-    <Home
-      removeFromCart={removeFromCart}
-      removeFromFav={removeFromFav}
-      card={card}
-      items={items}
-      searchText={searchText}
-      clickOnAdd={clickOnAdd}
-      clickOnFav={clickOnFav}
-      getSearchText={getSearchText}
-      setSearchText={setSearchText}
-      cartIds={cartIds}
-      favIds={favIds}
-    />
+    <div className="content p-40">
+      {/* body cards */}
+      <div className="sneakers d-flex flex-wrap ">
+        {filteredItems.map((sneaker) => {
+          return (
+            <Card
+              removeFromCart={removeFromCart}
+              removeFromFav={removeFromFav}
+              sneaker={sneaker}
+              key={sneaker.id}
+              addToCart={clickOnAdd}
+              addToFav={clickOnFav}
+              isAdded={cartIdsArr.includes(sneaker.id)}
+              isFavourited={favIdsArr.includes(sneaker.id)}
+            />
+          );
+        })}
+      </div>
+    </div>
   );
 }
 

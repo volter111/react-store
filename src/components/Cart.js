@@ -50,7 +50,7 @@ const Cart = ({ closeCart, onDelete, totalPrice, items = [] }) => {
               <li className="d-flex justify-between">
                 <span>Tax 5%:</span>
                 <div></div>
-                <b>$7.5</b>
+                <b>${(totalPrice * 0.05).toFixed(2)}</b>
               </li>
             </ul>
             <button className="buyItemsBtn">Buy items ➞</button>

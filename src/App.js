@@ -1,11 +1,13 @@
 import { Route, BrowserRouter, Routes } from "react-router-dom";
-import Listing from "./components/Listing";
 import { useState, useMemo, useEffect } from "react";
 import Header from "./components/Header";
 import Cart from "./components/Cart";
 import Card from "./components/Card";
 import FavCard from "./components/FavCard";
 import axios from "axios";
+import SearchBlock from "./components/SearchBlock";
+import Listing from "./components/Listing";
+import Favourites from "./components/Favourites";
 
 // How to start:
 //   json-server --watch items.json --port 3004
@@ -46,7 +48,7 @@ function App() {
     [items, favIds]
   );
 
-  console.log(favItems);
+  console.log(favItems, "FavItems");
 
   const totalPrice = useMemo(
     () => cartItems.reduce((sum, item) => sum + item.price, 0),
@@ -75,6 +77,23 @@ function App() {
     }
   };
 
+  const [searchText, setSearchText] = useState("");
+
+  const getSearchText = (event) => {
+    setSearchText(event.target.value);
+  };
+
+  const clickOnAdd = async (obj) => {
+    await axios.post("http://localhost:3004/cartIds/", { id: obj.id });
+    setCartIds((prev) => [...prev, { id: obj.id }]);
+    console.log(obj);
+  };
+
+  const clickOnFav = async (obj) => {
+    await axios.post("http://localhost:3004/favIds/", { id: obj.id });
+    setFavIds((prev) => [...prev, { id: obj.id }]);
+  };
+
   return (
     <BrowserRouter>
       <div className="wrapper clear">
@@ -91,31 +110,36 @@ function App() {
           <Route
             path="/"
             element={
-              <Listing
-                card={Card}
-                items={items}
-                setCartItems={setCartIds}
-                setFavItems={setFavIds}
-                favItems={favItems}
-                cartIds={cartIds}
-                favIds={favIds}
-                removeFromCart={removeFromCart}
-                removeFromFav={removeFromFav}
-              />
+              <>
+                <SearchBlock
+                  searchText={searchText}
+                  getSearchText={getSearchText}
+                  setSearchText={setSearchText}
+                />
+                <Listing
+                  clickOnAdd={clickOnAdd}
+                  clickOnFav={clickOnFav}
+                  searchText={searchText}
+                  card={Card}
+                  items={items}
+                  setCartItems={setCartIds}
+                  setFavItems={setFavIds}
+                  favItems={favItems}
+                  cartIds={cartIds}
+                  favIds={favIds}
+                  removeFromCart={removeFromCart}
+                  removeFromFav={removeFromFav}
+                />
+              </>
             }
           />
           <Route
             path="/favourites"
             element={
-              <Listing
+              <Favourites
+                favItems={favItems}
                 removeFromFav={removeFromFav}
                 card={FavCard}
-                items={favItems}
-                setCartItems={setCartIds}
-                setFavItems={setFavIds}
-                favItems={favItems}
-                cartIds={cartIds}
-                favIds={favIds}
               />
             }
           />
