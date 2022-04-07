@@ -29,14 +29,14 @@ function Listing({
         {filteredItems.map((sneaker) => {
           return (
             <Card
-              removeFromCart={removeFromCart}
-              removeFromFav={removeFromFav}
               sneaker={sneaker}
               key={sneaker.id}
               addToCart={clickOnAdd}
               addToFav={clickOnFav}
               isAdded={cartIdsArr.includes(sneaker.id)}
               isFavourited={favIdsArr.includes(sneaker.id)}
+              removeFromCart={removeFromCart}
+              removeFromFav={removeFromFav}
             />
           );
         })}
